@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1, .header h2 {
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #3498db;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        label, input, select {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        .actions a {
+            margin-right: 10px;
+            color: #e74c3c;
+            text-decoration: none;
+        }
+        .actions a.edit {
+            color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>SEGUNDO PARCIAL TEM-742</h1>
+        <h2>Nombre: Victor Rodrigo Condori Cruz</h2>
+        <h2>Carnet: 9953098</h2>
+    </div>
+
+    <div class="container">
+        <h1>Gestión de Productos</h1>
+
+      
+        <form action="/agregar" method="POST">
+            <label for="nombre">Nombre del Producto:</label>
+            <input type="text" name="nombre" required>
+
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" name="cantidad" min="1" required>
+
+            <label for="precio">Precio (por unidad):</label>
+            <input type="number" step="0.01" name="precio" required>
+
+            <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
+            <input type="date" name="fecha_vencimiento" required>
+
+            <label for="categoria">Categoría:</label>
+            <select name="categoria" required>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Alimentos">Alimentos</option>
+                <option value="Limpieza">Limpieza</option>
+                <option value="Hogar">Hogar</option>
+            </select>
+
+            <button type="submit">Agregar Producto</button>
+        </form>
+
+    
+        <h2>Productos en la tienda:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Fecha de Vencimiento</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.id }}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.cantidad }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>{{ producto.fecha_vencimiento }}</td>
+                    <td>{{ producto.categoria }}</td>
+                    <td class="actions">
+                        <a href="/editar/{{ producto.id }}" class="edit">Editar</a>
+                        <a href="/eliminar/{{ producto.id }}">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+       
+        <form action="/vaciar" method="GET">
+            <button type="submit">Vaciar Productos</button>
+        </form>
+    </div>
+</body>
+</html>
